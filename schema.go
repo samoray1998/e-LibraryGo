@@ -23,6 +23,19 @@ var xRootQuery = graphql.NewObject(graphql.ObjectConfig{
 			Type:    graphql.NewList(bookType),
 			Resolve: getBooks,
 		},
+		"authors": &graphql.Field{
+			Type:    graphql.NewList(authorType),
+			Resolve: getAuthors,
+		},
+		"author": &graphql.Field{
+			Type: authorType,
+			Args: graphql.FieldConfigArgument{
+				"id": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.Int),
+				},
+			},
+			Resolve: getAuthorById,
+		},
 	},
 })
 var mMutation = graphql.NewObject(graphql.ObjectConfig{
@@ -147,4 +160,21 @@ func addBook(params graphql.ResolveParams) (interface{}, error) {
 	}
 	return nil, errors.New("invalid ID")
 
+}
+
+func getAuthors(params graphql.ResolveParams) (interface{}, error) {
+	return authors, nil
+}
+
+func getAuthorById(params graphql.ResolveParams) (interface{}, error) {
+	authorId, ok := params.Args["id"].(int)
+	if ok {
+		for _, author := range authors {
+			if author.ID == authorId {
+				return author, nil
+			}
+		}
+		return nil, errors.New("Author not found")
+	}
+	return nil, errors.New("invalid ID")
 }

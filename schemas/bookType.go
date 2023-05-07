@@ -38,6 +38,12 @@ var bookType = graphql.NewObject(graphql.ObjectConfig{
 		"imageUrl": &graphql.Field{
 			Type: graphql.String,
 		},
+		"genre": &graphql.Field{
+			Type: genreType,
+		},
+		// "genre":&graphql.Field{
+		// 	Type:
+		// }
 	},
 })
 
@@ -52,6 +58,7 @@ var books = []models.Book{
 		Isbn:             "irut94579",
 		ImageURl:         "https://images-na.ssl-images-amazon.com/images/I/61PYe5p5l5L._SX329_BO1,204,203,200_.jpg",
 		PublishDate:      "2020-08-13",
+		Genre:            &genres[0],
 	},
 	{
 		ID:               2,
@@ -63,6 +70,7 @@ var books = []models.Book{
 		Isbn:             "ooiretj93489",
 		ImageURl:         "https://images-na.ssl-images-amazon.com/images/I/61PYe5p5l5L._SX329_BO1,204,203,200_.jpg",
 		PublishDate:      "1998-07-18",
+		Genre:            &genres[2],
 	},
 	{
 		ID:               3,
@@ -74,6 +82,7 @@ var books = []models.Book{
 		Isbn:             "9847590",
 		ImageURl:         "https://images-na.ssl-images-amazon.com/images/I/61PYe5p5l5L._SX329_BO1,204,203,200_.jpg",
 		PublishDate:      "2023-08-13",
+		Genre:            &genres[1],
 	},
 }
 

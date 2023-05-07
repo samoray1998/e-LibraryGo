@@ -31,6 +31,9 @@ var mMutation = graphql.NewObject(graphql.ObjectConfig{
 				"authorId": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.Int),
 				},
+				"genreId": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.Int),
+				},
 			},
 			Resolve: addBook,
 		},
@@ -48,6 +51,15 @@ var mMutation = graphql.NewObject(graphql.ObjectConfig{
 				},
 			},
 			Resolve: addAuthor,
+		},
+		"addGenre": &graphql.Field{
+			Type: genreType,
+			Args: graphql.FieldConfigArgument{
+				"name" : &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+			},
+			Resolve: addGenre,
 		},
 	},
 })

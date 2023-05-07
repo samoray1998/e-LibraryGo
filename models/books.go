@@ -10,4 +10,5 @@ type Book struct {
 	Isbn             string  `json:"isbn"`
 	PublishDate      string  `json:"publishDate"`
 	ImageURl         string  `json:"imageUrl"`
+	Genre           *Genre `json:"genre"`
 }

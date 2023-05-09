@@ -33,20 +33,39 @@ var xRootQuery = graphql.NewObject(graphql.ObjectConfig{
 			},
 			Resolve: getAuthorById,
 		},
-		"genres":&graphql.Field{
+		"genres": &graphql.Field{
 			Type: graphql.NewList(
 				genreType,
 			),
 			Resolve: getGenres,
 		},
-		"genre":&graphql.Field{
+		"genre": &graphql.Field{
 			Type: genreType,
 			Args: graphql.FieldConfigArgument{
-				"id":&graphql.ArgumentConfig{
+				"id": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.Int),
 				},
 			},
 			Resolve: getGenreById,
+		},
+		"users": &graphql.Field{
+			Type: graphql.NewList(
+				userType,
+			),
+			Resolve: getUsers,
+		},
+
+		"login": &graphql.Field{
+			Type: authPayload,
+			Args: graphql.FieldConfigArgument{
+				"userName": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+				"password": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+			},
+			Resolve: logInUser,
 		},
 	},
 })

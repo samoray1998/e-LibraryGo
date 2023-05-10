@@ -55,11 +55,26 @@ var mMutation = graphql.NewObject(graphql.ObjectConfig{
 		"addGenre": &graphql.Field{
 			Type: genreType,
 			Args: graphql.FieldConfigArgument{
-				"name" : &graphql.ArgumentConfig{
+				"name": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.String),
 				},
 			},
 			Resolve: addGenre,
+		},
+		"regester": &graphql.Field{
+			Type: userType,
+			Args: graphql.FieldConfigArgument{
+				"userName": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+				"password": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+				"email": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+			},
+			Resolve: regester,
 		},
 	},
 })

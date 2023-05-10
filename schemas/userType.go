@@ -2,6 +2,7 @@ package schemas
 
 import (
 	"errors"
+	"fmt"
 	"testGoGraph/models"
 	"time"
 
@@ -99,4 +100,17 @@ func logInUser(params graphql.ResolveParams) (interface{}, error) {
 		}
 	}
 	return nil, errors.New("Author not found")
+}
+
+func regester(params graphql.ResolveParams) (interface{}, error) {
+	userName, _ := params.Args["userName"].(string)
+	password, _ := params.Args["password"].(string)
+	email, _ := params.Args["email"].(string)
+	//newUser :=
+	newUser := models.User{ID: len(users) + 1, UserName: userName, Email: email, PasswordHash: password, CreatedAt: time.Now().UTC()}
+	users = append(users, newUser)
+	// log.Fatalln(newUser)
+	fmt.Println(newUser)
+	return newUser, nil
+
 }

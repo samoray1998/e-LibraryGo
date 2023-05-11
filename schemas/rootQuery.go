@@ -67,5 +67,39 @@ var xRootQuery = graphql.NewObject(graphql.ObjectConfig{
 			},
 			Resolve: logInUser,
 		},
+		"reviews": &graphql.Field{
+			Type: graphql.NewList(
+				reviewType,
+			),
+			Resolve: getRviews,
+		},
+		"borrowings": &graphql.Field{
+			Type: graphql.NewList(
+				borrowingType,
+			),
+			Resolve: getBorrowings,
+		},
+		"userBorrowings": &graphql.Field{
+			Type: graphql.NewList(
+				borrowingType,
+			),
+			Args: graphql.FieldConfigArgument{
+				"userId": &graphql.ArgumentConfig{
+					Type: graphql.Int,
+				},
+			},
+			Resolve: getUserBorrowings,
+		},
+		"bookReviews": &graphql.Field{
+			Type: graphql.NewList(
+				reviewType,
+			),
+			Args: graphql.FieldConfigArgument{
+				"bookId": &graphql.ArgumentConfig{
+					Type: graphql.Int,
+				},
+			},
+			Resolve: getBookReviews,
+		},
 	},
 })

@@ -33,6 +33,9 @@ var userType = graphql.NewObject(graphql.ObjectConfig{
 		"lastTimeSignedIn": &graphql.Field{
 			Type: graphql.DateTime,
 		},
+		"role": &graphql.Field{
+			Type: roleType,
+		},
 	},
 })
 
@@ -51,10 +54,10 @@ var authPayload = graphql.NewObject(
 )
 
 var users = []models.User{
-	{ID: 1, UserName: "john_doe", Email: "john@example.com", PasswordHash: "5f4dcc3b5aa765d61d8327deb882cf99", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC)},
-	{ID: 2, UserName: "jane_smith", Email: "jane@example.com", PasswordHash: "e10adc3949ba59abbe56e057f20f883e", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC)},
-	{ID: 3, UserName: "joe_bloggs", Email: "joe@example.com", PasswordHash: "fcea920f7412b5da7be0cf42b8c93759", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC)},
-	{ID: 4, UserName: "alice_wonderland", Email: "alice@example.com", PasswordHash: "96e79218965eb72c92a549dd5a330112", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC)},
+	{ID: 1, UserName: "john_doe", Email: "john@example.com", PasswordHash: "5f4dcc3b5aa765d61d8327deb882cf99", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC), Role: &roles[0]},
+	{ID: 2, UserName: "jane_smith", Email: "jane@example.com", PasswordHash: "e10adc3949ba59abbe56e057f20f883e", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC), Role: &roles[0]},
+	{ID: 3, UserName: "joe_bloggs", Email: "joe@example.com", PasswordHash: "fcea920f7412b5da7be0cf42b8c93759", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC), Role: &roles[0]},
+	{ID: 4, UserName: "alice_wonderland", Email: "alice@example.com", PasswordHash: "96e79218965eb72c92a549dd5a330112", CreatedAt: time.Date(2023, 05, 07, 11, 05, 51, 854880000, time.UTC), Role: &roles[1]},
 }
 
 func getUsers(params graphql.ResolveParams) (interface{}, error) {

@@ -101,5 +101,11 @@ var xRootQuery = graphql.NewObject(graphql.ObjectConfig{
 			},
 			Resolve: getBookReviews,
 		},
+		"notifications": &graphql.Field{
+			Type: graphql.NewList(
+				notificationType,
+			),
+			Resolve: getNotifications,
+		},
 	},
 })

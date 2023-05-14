@@ -76,5 +76,20 @@ var mMutation = graphql.NewObject(graphql.ObjectConfig{
 			},
 			Resolve: regester,
 		},
+		"addBorrowing": &graphql.Field{
+			Type: borrowingType,
+			Args: graphql.FieldConfigArgument{
+				"userId": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.Int),
+				},
+				"bookId": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.Int),
+				},
+				"statusId": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.Int),
+				},
+			},
+			Resolve: addBorrowing,
+		},
 	},
 })

@@ -17,8 +17,9 @@ func SetUpGraph() {
 	}()
 	var schema, err = graphql.NewSchema(
 		graphql.SchemaConfig{
-			Query:    xRootQuery,
-			Mutation: mMutation,
+			Query:        xRootQuery,
+			Mutation:     mMutation,
+			Subscription: rootSubscription,
 		},
 	)
 	if err != nil {

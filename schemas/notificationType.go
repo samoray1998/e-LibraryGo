@@ -1,6 +1,7 @@
 package schemas
 
 import (
+	"fmt"
 	"testGoGraph/models"
 	"time"
 
@@ -72,4 +73,19 @@ var notifications = []models.Notification{{
 
 func getNotifications(params graphql.ResolveParams) (interface{}, error) {
 	return notifications, nil
+}
+
+
+func addNotif(notif *models.Notification) {
+
+	notifications = append(notifications, *notif)
+	go func() {
+		for {
+			MyNotifCha <- notif
+		}
+	}()
+
+	value := <-MyNotifCha
+	fmt.Println("Received value:", value)
+
 }

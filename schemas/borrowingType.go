@@ -2,6 +2,8 @@ package schemas
 
 import (
 	"errors"
+	"fmt"
+
 	//"fmt"
 	"testGoGraph/models"
 	"time"
@@ -65,6 +67,7 @@ var borrowings = []models.Borrowing{
 		Status:     &status[3],
 	},
 }
+var x int = 0
 
 var status = []models.Status{
 	{ID: 1, Name: "borrowed"},
@@ -75,6 +78,47 @@ var status = []models.Status{
 
 func getBorrowings(params graphql.ResolveParams) (interface{}, error) {
 	return borrowings, nil
+}
+
+func addBorrowing(params graphql.ResolveParams) (interface{}, error) {
+	userId, _ := params.Args["userId"].(int)
+
+	bookId, _ := params.Args["bookId"].(int)
+
+	statusId, _ := params.Args["statusId"].(int)
+	var mybook models.Book
+	var myuser models.User
+	var mystatsu models.Status
+
+	for _, book := range books {
+		if book.ID == bookId {
+
+			mybook = book
+		}
+	}
+	for _, user := range users {
+		if user.ID == userId {
+			myuser = user
+		}
+	}
+	for _, status := range status {
+		if status.ID == statusId {
+			mystatsu = status
+		}
+	}
+
+	newBorrowing := models.Borrowing{ID: len(borrowings) + 1, User: &myuser, Book: &mybook, Status: &mystatsu, BorronigDate: time.Now().UTC(), ReturnDate: time.Now().Add(24 * time.Hour).UTC()}
+	borrowings = append(borrowings, newBorrowing)
+	x++
+	addNotif(&models.Notification{
+		ID:        len(notifications) + 1,
+		User:      &myuser,
+		Message:   "this is me jamal test " + fmt.Sprintf("%d", x),
+		Metadata:  map[string]interface{}{"book_id": mybook.ID, "user_Id": myuser.ID},
+		CreatedAt: time.Now(),
+	})
+	return newBorrowing, nil
+
 }
 
 func getUserBorrowings(params graphql.ResolveParams) (interface{}, error) {

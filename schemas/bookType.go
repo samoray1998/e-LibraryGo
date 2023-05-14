@@ -119,6 +119,7 @@ func addBook(params graphql.ResolveParams) (interface{}, error) {
 
 				newBook := models.Book{ID: len(books) + 1, Title: title, Author: &authorVal, NumberOfChapters: numberOfChapters, NumberOfPages: numberOfPages, Isbn: isbn, ImageURl: imgSrc, PublishDate: publishDate}
 				books = append(books, newBook)
+
 				fmt.Println(len(books))
 				return newBook, nil
 			}

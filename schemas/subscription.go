@@ -42,7 +42,7 @@ var rootSubscription = graphql.NewObject(graphql.ObjectConfig{
 						// }
 					}
 				}()
-				return <-MyNotifCha, nil
+				return <-notifChan, nil
 			},
 		},
 	}})

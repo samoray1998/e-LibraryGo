@@ -1,6 +1,8 @@
 package schemas
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"testGoGraph/models"
@@ -88,8 +90,11 @@ func GenerateJWT(user *models.User) (string, error) {
 func logInUser(params graphql.ResolveParams) (interface{}, error) {
 	userName, _ := params.Args["userName"].(string)
 	password, _ := params.Args["password"].(string)
+	hash := md5.Sum([]byte(password))
+	// Convert the hash to a hexadecimal string
+	hashStr := hex.EncodeToString(hash[:])
 	for _, user := range users {
-		if user.UserName == userName && user.PasswordHash == password {
+		if user.UserName == userName && user.PasswordHash == hashStr {
 			token, err := GenerateJWT(&user)
 			if err == nil {
 
@@ -109,8 +114,13 @@ func regester(params graphql.ResolveParams) (interface{}, error) {
 	userName, _ := params.Args["userName"].(string)
 	password, _ := params.Args["password"].(string)
 	email, _ := params.Args["email"].(string)
+
+	/// Calculate the MD5 hash of a password
+	hash := md5.Sum([]byte(password))
+	// Convert the hash to a hexadecimal string
+	hashStr := hex.EncodeToString(hash[:])
 	//newUser :=
-	newUser := models.User{ID: len(users) + 1, UserName: userName, Email: email, PasswordHash: password, CreatedAt: time.Now().UTC()}
+	newUser := models.User{ID: len(users) + 1, UserName: userName, Email: email, PasswordHash: hashStr, CreatedAt: time.Now().UTC()}
 	users = append(users, newUser)
 	// log.Fatalln(newUser)
 	fmt.Println(newUser)

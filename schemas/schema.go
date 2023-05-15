@@ -25,13 +25,13 @@ func SetUpGraph() {
 	if err != nil {
 		panic(err)
 	}
-	// GraphQL query to get all books
+	//GraphQL query to get all books
 	query := `
 	 {
-		 books {
+		 users {
 			 id
-			 title
 			 
+
 		 }
 	 }`
 

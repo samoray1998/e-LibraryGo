@@ -127,3 +127,34 @@ func regester(params graphql.ResolveParams) (interface{}, error) {
 	return newUser, nil
 
 }
+
+func verifayJwt(tokenString string) (bool, error) {
+	// Parse the JWT and verify the signature
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, jwt.ErrSignatureInvalid
+		}
+		return secretKey, nil
+	})
+	if err != nil {
+		print("i was here")
+		//
+		return false, errors.New("your token is invalid")
+	}
+
+	// Get the user ID from the JWT
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		// http.Error(w, "Invalid token", http.StatusUnauthorized)
+
+		return false, errors.New("your token is invalid")
+	}
+	userID := int(claims["id"].(float64))
+	exp := int64(claims["exp"].(float64))
+	fmt.Print("this is the user id in the data base userID ", userID)
+	if exp < time.Now().Unix() {
+		return false, errors.New("token is expired")
+	}
+	return true, nil
+
+}

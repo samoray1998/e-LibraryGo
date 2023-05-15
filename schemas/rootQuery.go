@@ -17,7 +17,12 @@ var xRootQuery = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: getBookById,
 		},
 		"books": &graphql.Field{
-			Type:    graphql.NewList(bookType),
+			Type: graphql.NewList(bookType),
+			Args: graphql.FieldConfigArgument{
+				"token": &graphql.ArgumentConfig{
+					Type: graphql.NewNonNull(graphql.String),
+				},
+			},
 			Resolve: getBooks,
 		},
 		"authors": &graphql.Field{

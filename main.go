@@ -19,10 +19,10 @@ func main() {
 	// 	Pretty:   true,
 	// 	GraphiQL: true,
 	// }))
-	fmt.Println("Now server is running on port 8041")
+	fmt.Println("Now server is running on port 8044")
 	// log.Fatal(http.ListenAndServe(":8040", nil))
-	log.Fatal(http.ListenAndServe(":8041", nil))
-	
+	log.Fatal(http.ListenAndServe(":8044", nil))
+
 }
 
 // to add mutation and try to connecte this things with data base and connect with flutter aftre word

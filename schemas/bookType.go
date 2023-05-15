@@ -100,7 +100,21 @@ func getBookById(params graphql.ResolveParams) (interface{}, error) {
 	return nil, errors.New("invalid ID")
 }
 func getBooks(params graphql.ResolveParams) (interface{}, error) {
-	return books, nil
+	token := params.Args["token"].(string)
+	println("token of user is ", token)
+	_, err := verifayJwt(token)
+	//println("this is another test", myT.Claims)
+	//fmt.Println("error happend hhh ", myT.Claims)
+	//err1 := graphql.NewLocatedError(fmt.Sprintf("Something went wrong: %s", err), nil)
+
+	if err == nil {
+		return books, nil
+		//return errors.New("test"), nil
+		// graphql.Error(graphql.ErrorType{Message: "Error message"})
+	} else {
+		return nil, err
+	}
+
 }
 
 func addBook(params graphql.ResolveParams) (interface{}, error) {
